@@ -73,11 +73,19 @@ def roll():
     quality = round(random.uniform(0.8, 1), 5)
     return Item(random.choice(englishOpen), "Legendary", "English Open", quality, math.floor(1000 * quality))
   else:
-    #supercalifragilisticexpialidocious
-    pity = 0
-    quality = round(random.uniform(1, 2), 5)
-    return Item(random.choice(englishEX), "Supercalifragilisticexpialidocious", "English Extreme", quality, math.floor(10000 * quality))
-
+    newroll = random.randint(1, 100)
+    if newroll == 100:
+      pity = 0
+      quality = round(random.uniform(1, 2), 5)
+      return Item(random.choice(englishEX), "Supercalifragilisticexpialidocious", "English Extreme", quality, math.floor(10000 * quality))
+    else:
+      if pity >= 50:
+        pity -= 50
+      else:
+        pity = 0
+      quality = round(random.uniform(0.8, 1), 5)
+      return Item(random.choice(englishOpen), "Legendary", "English Open", quality, math.floor(1000 * quality))
+    
 @app.route('/', methods=['POST', 'GET'])
 def index():
   global coins
