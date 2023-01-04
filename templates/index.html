@@ -1,0 +1,52 @@
+{% extends 'base.html' %} 
+
+{% block head %}
+  <title>Word Gacha</title>
+{% endblock %} 
+
+{% block body %}
+  <div class="content">
+    <h1 class="text-center pt-4">Collection</h1>
+    <div class="text-center">
+      <h1>{{ coins }} Coins</h1>
+    </div>
+    {% if items|length < 1 %}
+    <h4 class="text-center">No Items!</h4>
+    {% else %}
+
+    <div class="text-center">
+      <table class="table table-striped" style="width:100%;">
+        <tbody style="display:inline-block; height:600px; overflow-y:scroll">
+          <tr>
+            <th>Item</th>
+            <th>Rarity</th>
+            <th>Collection</th>
+            <th>Quality</th>
+            <th>Sell Price</th>
+            <th>Actions</th>
+          </tr>
+          {% for item in items %}
+            <tr>
+              <td>{{ item.content }}</td>
+              <td>{{ item.rarity }}</td>
+              <td>{{ item.collection }}</td>
+              <td>{{ item.quality }}</td>
+              <td>{{ item.sellvalue }}</td>
+              <td>
+                <a href="/delete/{{item.id}}">Sell</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>  
+    </table>
+    </div>
+    
+    {% endif %}
+    <div class="text-center">
+      <form action="/" method="POST">
+        <input type="submit" value="Roll (-10 Coins)">
+      </form>
+    </div>
+    
+  </div>
+{%endblock %}
