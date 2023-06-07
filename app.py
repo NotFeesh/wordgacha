@@ -14,7 +14,7 @@ english10k = open('english10k.txt', 'r').readlines()
 english1k = open('english1k.txt', 'r').readlines()
 englishEX = open('englishEX.txt', 'r').readlines()
 
-class Todo(db.Model):
+class m_item(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   content = db.Column(db.String(100))
   rarity = db.Column(db.String(100))
@@ -99,7 +99,7 @@ def index():
       collection = item.collection
       quality = item.quality
       sellvalue = item.sellvalue
-      new_item = Todo(content=item_content, rarity=rarity, collection=collection, quality=quality, sellvalue=sellvalue)
+      new_item = m_Item(content=item_content, rarity=rarity, collection=collection, quality=quality, sellvalue=sellvalue)
 
       try:
         db.session.add(new_item)
@@ -111,14 +111,14 @@ def index():
       return redirect('/')
 
   else:
-    items = Todo.query.order_by(Todo.rarity.desc()).all()
+    items = m_Item.query.order_by(m_Item.rarity.desc()).all()
     return render_template('index.html', items=items, coins=coins)
 
 @app.route('/delete/<int:id>')
 def delete(id):
   global coins
 
-  task_to_delete = Todo.query.get_or_404(id)
+  task_to_delete = m_Item.query.get_or_404(id)
   coins += task_to_delete.sellvalue
   try:
     db.session.delete(task_to_delete)
